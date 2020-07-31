@@ -1,0 +1,33 @@
+{
+  "name": "ganymede",
+  "version": "1.0.0",
+  "description": "Once a job is successfully delegated, the search order status is set to processing.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiegoMMF/ganymede.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DiegoMMF/ganymede/issues"
+  },
+  "homepage": "https://github.com/DiegoMMF/ganymede#readme",
+  "dependencies": {
+    "jsdoc": "^3.6.5",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^9.1.0",
+    "mongoose": "^5.9.26"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4"
+  }
+}
