@@ -1,0 +1,31 @@
+{
+  "name": "ganymede",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "search": "node src/api/product/search.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiegoMMF/ganymede.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DiegoMMF/ganymede/issues"
+  },
+  "homepage": "https://github.com/DiegoMMF/ganymede#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^9.1.0",
+    "mongoose": "^5.9.27"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
