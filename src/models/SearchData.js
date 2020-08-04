@@ -7,8 +7,8 @@ const OptionsSchema = new Schema({
 
 const SearchDataSchema = new Schema({
     query: String,
-    options: OptionsSchema,
     provider: String,
+    options: OptionsSchema,
     callbackUrl: String
 });
 
