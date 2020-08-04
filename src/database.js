@@ -6,31 +6,11 @@ mongoose.connect('mongodb://localhost/test', {
     useUnifiedTopology: true
 })
 
-console.log("host: ", mongoose.connection.host);
-console.log("id: ", mongoose.connection.id);
-
-console.log("name: ", mongoose.connection.name);
-console.log("port: ", mongoose.connection.port);
-
-(async () => {
-    const nuevaOrden = new SearchOrder({
-        searchData: {
-            query: "calefones",
-            provider: "musimundo",
-            options: {
-                user: "roberto",
-                password: "carlos"
-            },
-            callbackUrl: "https://ensayosypoemas.wordpress.com"
-        },
-        status: "received",
-        productList: {}
-    });
-    nuevaOrden.save((err) => { 
-        if (err) console.log(err)
-    });
-    console.log()})();
-
-    console.log("models: ", mongoose.connection.models);
-// .then(mongoose.connection.close())
-// .catch(console.error());
+console.log(
+    "DB: ", "\n",
+    "host: ", mongoose.connection.host, "\n",
+    "id: ", mongoose.connection.id, "\n",
+    "name: ", mongoose.connection.name, "\n",
+    "port: ", mongoose.connection.port, "\n",
+    "models: ", mongoose.connection.models
+);

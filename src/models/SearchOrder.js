@@ -1,9 +1,20 @@
 const { Schema, model } = require('mongoose');
 const Product = require("./Product");
-const SearchData = require('./SearchData');
+
+const OptionsSchema = new Schema({
+    user: String,
+    password: String
+})
+
+const SearchDataSchema = new Schema({
+    query: String,
+    provider: String,
+    options: OptionsSchema,
+    callbackUrl: String
+});
 
 const SearchOrderSchema = new Schema({
-    searchData: SearchData.schema,
+    searchData: SearchDataSchema,
     status: String,
     productList: Product.schema
 });

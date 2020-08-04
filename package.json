@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "search": "node src/api/product/search.js"
+    "search": "node src/api/product/search.js",
+    "dev": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,12 +19,12 @@
   },
   "homepage": "https://github.com/DiegoMMF/ganymede#readme",
   "dependencies": {
+    "@koa/router": "^9.3.1",
     "dotenv": "^8.2.0",
     "jsdoc": "^3.6.5",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
     "koa-logger": "^3.2.1",
-    "koa-router": "^9.1.0",
     "mongoose": "^5.9.27"
   },
   "devDependencies": {
