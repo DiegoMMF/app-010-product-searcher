@@ -10,7 +10,7 @@ const dummySearchData = {
     callbackUrl: "https://ensayosypoemas.wordpress.com"
 }
 
-const newSearchOrder = () => {
+exports.newSearchOrder = () => {
 
     const searchOrder = new SearchOrder;
     
@@ -24,5 +24,3 @@ const newSearchOrder = () => {
     
     return searchOrder;
 };
-
-module.exports = newSearchOrder;
