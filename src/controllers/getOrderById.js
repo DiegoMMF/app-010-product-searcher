@@ -1,7 +1,5 @@
-function getOrderById() {
-    app.use(async ctx => {
-        ctx.body = 'Hello World';
-    });
+const getOrderById = (ctx) => {
+    ctx.body = `Hello world! Prefix: ${ctx.route.prefix}`
 };
 
 module.exports = getOrderById;

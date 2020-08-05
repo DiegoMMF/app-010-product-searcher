@@ -10,16 +10,19 @@ const dummySearchData = {
     callbackUrl: "https://ensayosypoemas.wordpress.com"
 }
 
-function newSearchOrder() {
+const newSearchOrder = () => {
+
     const searchOrder = new SearchOrder;
+    
     searchOrder.searchData = dummySearchData;
     searchOrder.status = "received";
     searchOrder.productList = [];
+
+    searchOrder.save((err) => {
+        if (err) console.log(err)
+    });
     
     return searchOrder;
-}
+};
 
 module.exports = newSearchOrder;
-
-
-

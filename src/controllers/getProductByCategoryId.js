@@ -1,7 +1,5 @@
-function getProductByCategoryId() {
-    app.use(async ctx => {
-        ctx.body = 'Hello World';
-    });
+const getProductByCategoryId = (ctx) => {
+    ctx.body = `Hello world! Prefix: ${ctx.route.prefix}`
 };
 
 module.exports = getProductByCategoryId;

@@ -1,7 +1,5 @@
-function getAllSearchOrders() {
-    app.use(async ctx => {
-        ctx.body = 'Hello World';
-    });
+const getAllSearchOrders = (ctx) => {
+    ctx.body = `Hello world! Prefix: ${ctx.route.prefix}`
 };
 
 module.exports = getAllSearchOrders;
