@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const Koa = require('koa');
 const Router = require('@koa/router');
+const cors = require("@koa/cors");
 
 const bodyParser = require('koa-bodyparser');
 
@@ -21,6 +22,7 @@ const router = new Router()
 
 app.use(bodyParser());
 app.use(KoaLogger());
+app.use(cors());
 
 /**
  * This endpoint receives a JSON object with the search data and responds with the newly created order.
@@ -38,7 +40,7 @@ router.post('/api/product/search', ctx => {
    
   searchOrder.searchData = ctx.request.body;
   searchOrder.status = "received";
-  searchOrder.productList = [];
+  searchOrder.productList = {};
   
   searchOrder.save((err) => {
       if (err) console.log(err)
