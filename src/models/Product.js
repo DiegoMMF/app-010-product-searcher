@@ -1,4 +1,9 @@
-const { Schema, model } = require('mongoose');
+/**
+ * @fileoverview definición del esquema principal para la
+ * colección de productos que serán indexados por categoría.
+ */
+
+ const { Schema, model } = require('mongoose');
 
 const ProductSchema = new Schema({
     SKU: String,

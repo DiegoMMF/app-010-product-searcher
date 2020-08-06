@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const SearchOrder = require('./models/SearchOrder');
 
 mongoose.connect('mongodb://localhost/test', {
     useNewUrlParser: true,

@@ -1,20 +1,17 @@
 const SearchOrder = require("../models/SearchOrder");
 
-const dummySearchData = {
-    query: "calefones",
-    provider: "miAbuelaLosPatea",
-    options: {
-        user: "abuela",
-        password: "nona"
-    },
-    callbackUrl: "https://ensayosypoemas.wordpress.com"
-}
-
-exports.newSearchOrder = () => {
+/**
+ * Recibimos core-data para un búsqueda que insertamos en 
+ * el documento principal que contendrá toda la orden.
+ * 
+ * @param { Object } receivedSearchData ver sub-esquema de
+ * SearchOrderSchema en SearchOrder.js
+ */
+exports.newSearchOrder = (receivedSearchData) => {
 
     const searchOrder = new SearchOrder;
     
-    searchOrder.searchData = dummySearchData;
+    searchOrder.searchData = receivedSearchData;
     searchOrder.status = "received";
     searchOrder.productList = [];
 

@@ -1,3 +1,8 @@
+/**
+ * @fileoverview definición del esquema principal para la
+ * colección de órdenes de búsqueda.
+ */
+
 const { Schema, model } = require('mongoose');
 const Product = require("./Product");
 
