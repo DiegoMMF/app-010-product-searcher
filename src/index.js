@@ -52,7 +52,12 @@ router.post('/api/product/search', ctx => {
 /**
  * This endpoint receives an order ID, and responds with the order object
  */
-router.get('/api/product/search-order/', (ctx, next) => { ctx.body = '/api/product/search-order/'; });
+router.get('/api/product/search-order/:orderID', async (ctx, next) => {
+
+  const order = await SearchOrder.findById(ctx.params.orderID);
+  ctx.body = order;
+
+});
 
 router.get('/', (ctx, next) => { ctx.body = 'Hello World!'; })
 

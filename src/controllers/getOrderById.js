@@ -9,5 +9,5 @@ const SearchOrder = require("../models/SearchOrder");
 exports.getOrderById = (orderID) => {
 
     return SearchOrder.findById(orderID);
-    
+
 };
