@@ -47,8 +47,6 @@ router.post('/api/product/search', ctx => {
   }
 );
 
-
-
 /**
  * This endpoint receives an order ID, and responds with the order object
  */
@@ -59,12 +57,9 @@ router.get('/', (ctx, next) => { ctx.body = 'Hello World!'; })
 /**
  * This endpoint returns the full list of search orders
  */
-router.get('/api/product/search-orders', (cxt, next) => {
-  // getAllSearchOrders;
-  const orderList = SearchOrder.find();
-  Object.toString(orderList);
-  console.log(orderList);
-  cxt.body = typeof orderList;
+router.get('/api/product/search-orders', async (cxt, next) => {
+  const orderList = await SearchOrder.find();
+  cxt.body = orderList;
 });
 
 /**
