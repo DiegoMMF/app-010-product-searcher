@@ -27,8 +27,15 @@ app.use(bodyParser());
  * This endpoint receives a JSON object with the search data and responds with the newly created order.
  */
 router.post('/api/product/search', async (ctx, next) => {
-  await newSearchOrder(ctx.request.body);
-  cxt.body = "estamos en eso, no te apresures..."
+  const nuevaOrden = await newSearchOrder(ctx.request.body);
+  const resultado = await fetch(/*
+    1° ganymede -> nuevaOrden -> themisto
+    2° nueva Orden -> status -> processing
+    3° themisto -> nuevaOrden -> ganymede
+    4° nueva Orden -> status -> fulfilled | failed
+    5° ganymede -> nuevaOrden -> client
+    */);
+  cxt.body = nuevaOrden;
 })
 
 /**

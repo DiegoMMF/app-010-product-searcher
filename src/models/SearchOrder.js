@@ -7,21 +7,40 @@ const { Schema, model } = require('mongoose');
 const Product = require("./Product");
 
 const OptionsSchema = new Schema({
-    user: String,
-    password: String
+    user: {
+        type: String, 
+        required: true },
+    password: {
+        type: String, 
+        required: true }
 })
 
 const SearchDataSchema = new Schema({
-    query: String,
-    provider: String,
-    options: OptionsSchema,
-    callbackUrl: String
+    query: {
+        type: String, 
+        required: true },
+    provider: {
+        type: String, 
+        required: true },
+    options: {
+        type: OptionsSchema,
+        required: true
+    },
+    callbackUrl: {
+        type: String, 
+        required: true }
 });
 
 const SearchOrderSchema = new Schema({
-    searchData: SearchDataSchema,
-    status: String,
-    productList: Product.schema
+    searchData: {
+        type: SearchDataSchema, 
+        required: true },
+    status: {
+        type: String, 
+        required: true },
+    productList: {
+        type: Product.schema, 
+        required: true }
 });
 
 module.exports = model("SearchOrder", SearchOrderSchema);

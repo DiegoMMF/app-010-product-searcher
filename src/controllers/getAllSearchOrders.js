@@ -7,6 +7,8 @@ const SearchOrder = require("../models/SearchOrder");
 
 exports.getAllSearchOrders = () => {
 
-    return SearchOrder.find();
+    const todas = await SearchOrder.find();
+    // errores
+    return todas;
 
 };
