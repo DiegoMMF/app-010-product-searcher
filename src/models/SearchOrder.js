@@ -37,10 +37,10 @@ const SearchOrderSchema = new Schema({
         required: true },
     status: {
         type: String, 
-        required: true },
+        required: true }/* ,
     productList: {
         type: Product.schema, 
-        required: true }
+        required: true } */
 });
 
 module.exports = model("SearchOrder", SearchOrderSchema);

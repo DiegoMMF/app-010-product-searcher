@@ -5,7 +5,7 @@ const SearchOrder = require("../models/SearchOrder");
  * órdenes de búsquedas.
  */
 
-exports.getAllSearchOrders = () => {
+exports.getAllSearchOrders = async () => {
 
     const todas = await SearchOrder.find();
     // errores

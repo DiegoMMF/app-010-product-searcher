@@ -13,45 +13,58 @@ require("./database");
 /**
  * Controladores que se encargarán de efectivizar las operaciones de los endpoints
  */
-const newSearchOrder = require("./controllers/newSearchOrder");
-const getOrderById = require("./controllers/getOrderById");
-const getAllSearchOrders = require("./controllers/getAllSearchOrders")
-const getProductsByCategoryId = require("./controllers/getProductByCategoryId");
+const SearchOrder = require("./models/SearchOrder");
+const KoaLogger = require("koa-logger");
 
 const app = new Koa();
 const router = new Router()
 
 app.use(bodyParser());
+app.use(KoaLogger());
 
 /**
  * This endpoint receives a JSON object with the search data and responds with the newly created order.
+ *
+ * const resultado = await fetch(
+ *     1° ganymede -> nuevaOrden -> themisto
+ *     2° nueva Orden -> status -> processing
+ *     3° themisto -> nuevaOrden -> ganymede
+ *     4° nueva Orden -> status -> fulfilled | failed
+ *     5° ganymede -> nuevaOrden -> client
+ * );
  */
-router.post('/api/product/search', async (ctx, next) => {
-  const nuevaOrden = await newSearchOrder(ctx.request.body);
-  const resultado = await fetch(/*
-    1° ganymede -> nuevaOrden -> themisto
-    2° nueva Orden -> status -> processing
-    3° themisto -> nuevaOrden -> ganymede
-    4° nueva Orden -> status -> fulfilled | failed
-    5° ganymede -> nuevaOrden -> client
-    */);
-  cxt.body = nuevaOrden;
-})
+router.post('/api/product/search', ctx => {
+  const searchOrder = new SearchOrder;
+   
+  searchOrder.searchData = ctx.request.body;
+  searchOrder.status = "received";
+  searchOrder.productList = [];
+  
+  searchOrder.save((err) => {
+      if (err) console.log(err)
+  });
+  ctx.body = JSON.stringify(searchOrder);
+  }
+);
+
+
 
 /**
  * This endpoint receives an order ID, and responds with the order object
  */
-router.get('/api/product/search-order/:searchOrderID', async (cxt, next) => {
-  await getOrderById(searchOrderID);
-  cxt.body = "estamos en eso, no te apresures..."
-});
+router.get('/api/product/search-order/', (ctx, next) => { ctx.body = '/api/product/search-order/'; });
+
+router.get('/', (ctx, next) => { ctx.body = 'Hello World!'; })
 
 /**
  * This endpoint returns the full list of search orders
  */
 router.get('/api/product/search-orders', (cxt, next) => {
-  getAllSearchOrders;
-  cxt.body = "estamos en eso, no te apresures..."    
+  // getAllSearchOrders;
+  const orderList = SearchOrder.find();
+  Object.toString(orderList);
+  console.log(orderList);
+  cxt.body = typeof orderList;
 });
 
 /**
@@ -59,7 +72,7 @@ router.get('/api/product/search-orders', (cxt, next) => {
  */
 router.get('/api/product/category/:categoryID', async (cxt, next) => {
   getProductsByCategoryId;
-  cxt.body = "estamos en eso, no te apresures..."    
+  cxt.body = `OK!, ya que preguntás, la categoryID es ${categoryID}`;    
 });
 
 app
