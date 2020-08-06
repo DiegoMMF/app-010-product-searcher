@@ -6,6 +6,8 @@ require("dotenv").config();
 const Koa = require('koa');
 const Router = require('@koa/router');
 
+require("./database");
+
 /**
  * Controladores que se encargarán de efectivizar las operaciones de los endpoints
  */
@@ -15,12 +17,12 @@ const getAllSearchOrders = require("./controllers/getAllSearchOrders")
 const getProductsByCategoryId = require("./controllers/getProductByCategoryId");
 const bodyParser = require('koa-bodyparser');
 
-require("./database");
-
 const app = new Koa();
 const router = new Router()
 
 app.use(bodyParser());
+
+
 
 /**
  * This endpoint receives a JSON object with the search data and responds with the newly created order.

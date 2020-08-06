@@ -1,15 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/test', {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-})
-
-console.log(
-    "DB: ", "\n",
-    "host: ", mongoose.connection.host, "\n",
-    "id: ", mongoose.connection.id, "\n",
-    "name: ", mongoose.connection.name, "\n",
-    "port: ", mongoose.connection.port, "\n",
-    "models: ", mongoose.connection.models
-);
+}).then(console.log("Conexión Arriba.-"))
