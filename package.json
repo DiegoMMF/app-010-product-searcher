@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "search": "node src/api/product/search.js",
-    "dev": "node src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
