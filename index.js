@@ -1,5 +1,6 @@
 /**
- * Traemos el módulo para ocultar el string del la DB
+ * Traemos el módulo dotenv para ocultar el string del la DB
+ * durante desarrollo
  */
 require("dotenv").config();
 
@@ -11,11 +12,12 @@ const bodyParser = require('koa-bodyparser');
 
 require("./src/database");
 
+const SearchOrder = require("./src/models/SearchOrder");
+const KoaLogger = require("koa-logger");
+
 /**
  * Controladores que se encargarán de efectivizar las operaciones de los endpoints
  */
-const SearchOrder = require("./src/models/SearchOrder");
-const KoaLogger = require("koa-logger");
 const { newSearchOrder } = require("./src/controllers/newSearchOrder");
 const callThemisto = require("./src/controllers/callThemisto");
 
@@ -30,6 +32,13 @@ router.get("/", (ctx, next) => {
   ctx.body = "Bienvenid@ a Ganymede Web Service!";
 });
 
+/**
+ * endpoint principal, donde se crea la orden solicitada y
+ * se delega a Themisto la búsqueda.
+ * 
+ * Anda todo menos la devolución de Themisto del JSON,
+ * que me genera conflicto.
+ */
 router.post('/api/product/search', async ctx => {
 
   console.log("ctx.request.body: \n", ctx.request.body);

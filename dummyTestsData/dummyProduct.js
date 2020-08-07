@@ -1,3 +1,7 @@
+/**
+ * @fileoverview utilizado al principio, para comprobaciones.
+ */
+
 exports.dummyProduct = {
     SKU: "123",
     productName: "silla",

@@ -1,3 +1,7 @@
+/**
+ * @fileoverview utilizado al principio, para comprobaciones.
+ */
+
 exports.dummySearchOrder = {
     searchData = {
         query: "calefones",

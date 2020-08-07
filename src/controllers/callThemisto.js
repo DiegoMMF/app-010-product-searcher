@@ -1,5 +1,15 @@
+/**
+ * Todavía no puedo solucionar el tema del intercambio
+ * entre servidores y pasaje de JSONs,
+ * me parece que G enviará queries a T en lugar de body
+ */
 const fetch = require("node-fetch");
 
+/**
+ * 
+ * @param { Object } searchOrder documento de nuestra DB
+ * que contiene la orden de búsqueda inicializada en newSearchOrder
+ */
 const callThemisto = async (searchOrder) => {
     searchOrder.status = "processing";
 

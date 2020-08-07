@@ -1,3 +1,7 @@
+/**
+ * @fileoverview utilizado al principio, para comprobaciones.
+ */
+
 exports.dummySearchData = {
     query: "calefones",
     provider: "miAbuelaLosPatea",
