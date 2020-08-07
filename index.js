@@ -26,6 +26,10 @@ app.use(bodyParser());
 app.use(KoaLogger());
 app.use(cors());
 
+router.get("/", (ctx, next) => {
+  ctx.body = "Bienvenid@ a Ganymede Web Service!";
+});
+
 router.post('/api/product/search', async ctx => {
 
   console.log("ctx.request.body: \n", ctx.request.body);
@@ -94,8 +98,6 @@ router.get('/api/product/search-order/:orderID', async (ctx, next) => {
   ctx.body = order;
 
 });
-
-router.get('/', (ctx, next) => { ctx.body = 'Hello World!'; })
 
 /**
  * This endpoint returns the full list of search orders
