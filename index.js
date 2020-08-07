@@ -16,7 +16,8 @@ require("./src/database");
  */
 const SearchOrder = require("./src/models/SearchOrder");
 const KoaLogger = require("koa-logger");
-// const callThemisto = require("./src/controllers/callThemisto");
+const { newSearchOrder } = require("./src/controllers/newSearchOrder");
+const callThemisto = require("./src/controllers/callThemisto");
 
 const app = new Koa();
 const router = new Router()
@@ -25,35 +26,61 @@ app.use(bodyParser());
 app.use(KoaLogger());
 app.use(cors());
 
-/**
- * This endpoint receives a JSON object with the search data and responds with the newly created order.
- *
- * const resultado = await fetch(
- *     1° ganymede -> nuevaOrden -> themisto
- *     2° nueva Orden -> status -> processing
- *     3° themisto -> nuevaOrden -> ganymede
- *     4° nueva Orden -> status -> fulfilled | failed
- *     5° ganymede -> nuevaOrden -> client
- * );
- */
 router.post('/api/product/search', async ctx => {
-  const searchOrder = new SearchOrder;
-   
-  searchOrder.searchData = ctx.request.body;
-  searchOrder.status = "received";
-  searchOrder.productList = [{}];
-  
-  await searchOrder.save((err) => {
-      if (err) console.log(err)
-  });
 
-  /* callThemisto(searchOrder)
-    .then(respuesta => console.log(respuesta)) // JSON data parsed by `data.json()` call
-    .catch(err => console.log(err)); */
+  console.log("ctx.request.body: \n", ctx.request.body);
+
+  const preScrapingOrder = await newSearchOrder(ctx.request.body);
+
+  console.log("preScrapingOrder después de newSearchOrder(ctx.request.body): ", preScrapingOrder) ;
+
+  const postScrapingOrder = /* new SearchOrder();
+  postScrapingOrder =  */await callThemisto(preScrapingOrder);
+
+  console.log("postScrapingOrder después de callThemisto(preScrapingOrder): ", postScrapingOrder) ;
+
+  const productsListPostScraping = postScrapingOrder.productList;
+  const statusPostScraping = postScrapingOrder.status;
+
+  const finalOrder = await SearchOrder.findByIdAndUpdate(
+    (await preScrapingOrder)._id,
+    {
+      $set:
+      // parece que en mongoose no es necesario poner $set
+      {
+        productList: productsListPostScraping,
+        status: statusPostScraping
+      }
+    },
+    {
+      new: true
+    }
+  ); // verificar si reemplaza o no el Doc en la DB.
   
-  ctx.body = JSON.stringify(searchOrder);
-  }
-);
+  console.log("finalOrder justo antes de irnos pa'las casa'...", finalOrder);  // El tema es que me devuelve la query y no el documento...
+
+  // console.log(Object.toString(finalOrder)); -->> "function Object() { [native code] }"
+  
+  ctx.body = "Por lo menos, llegó al final, jajajaja...";
+  
+  /* ctx.body = JSON.stringify(finalOrder); --> Devuelve lo de abajo.
+    TypeError: Converting circular structure to JSON
+      --> starting at object with constructor 'NativeTopology'
+      |     property 's' -> object with constructor 'Object'
+      |     property 'sessionPool' -> object with constructor 'ServerSessionPool'
+      --- property 'topology' closes the circle
+      
+      encontrar el error.
+
+      JavaScript structures that include circular references can't be serialized with a"plain" JSON.stringify. Example:
+        a = { name: 'Groucho' };
+        b = { name: 'Harpo', sibling: a };
+        a.sibling = b;
+      Doing a JSON.stringify(a) will throw an error:
+        TypeError: Converting circular structure to JSON
+
+*/
+});
 
 /**
  * This endpoint receives an order ID, and responds with the order object
@@ -82,7 +109,7 @@ router.get('/api/product/search-orders', async (cxt, next) => {
  */
 router.get('/api/product/category/:categoryID', async (cxt, next) => {
   getProductsByCategoryId;
-  cxt.body = `OK!, ya que preguntás, la categoryID es ${categoryID}`;    
+  cxt.body = `OK!, ya que preguntás, la categoryID es ${categoryID}`;
 });
 
 app

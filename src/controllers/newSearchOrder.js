@@ -4,20 +4,21 @@ const SearchOrder = require("../models/SearchOrder");
  * Recibimos core-data para un búsqueda que insertamos en 
  * el documento principal que contendrá toda la orden.
  * 
- * @param { Object } receivedSearchData ver sub-esquema de
- * SearchOrderSchema en SearchOrder.js
+ * @param { Object } requestBodySearchData request body with original
+ * order data
  */
-exports.newSearchOrder = (receivedSearchData) => {
+exports.newSearchOrder = async (requestBodySearchData) => {
 
-    const searchOrder = new SearchOrder;
+    const searchOrder = new SearchOrder();
     
-    searchOrder.searchData = receivedSearchData;
+    searchOrder.searchData = requestBodySearchData;
     searchOrder.status = "received";
-    searchOrder.productList = [];
+    searchOrder.productList = [{}];
 
-    searchOrder.save((err) => {
+    await searchOrder.save((err) => {
         if (err) console.log(err)
     });
     
     return searchOrder;
+
 };

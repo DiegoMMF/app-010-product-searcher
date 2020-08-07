@@ -1,42 +1,36 @@
-async function callThemisto(searchOrder) {
-
-  const response = await fetch('https://dashboard.heroku.com/apps/diegommf-themisto', {
-    headers: {
-      // 'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(searchOrder)
-  });
-
-  return response.json();
-}
-
-module.exports = callThemisto;
-
-/* const Koa = require("koa");
-const Router = require("koa-router");
 const fetch = require("node-fetch");
 
-new Koa()
-  .use(
-    new Router()
-      .get("/characters/:id", async ctx => {
-        try {
-          const res = await fetch(`https://swapi.co/api/people/${ctx.params.id}`);
+const callThemisto = async (searchOrder) => {
+  searchOrder.status = "processing";
+  try {
+    console.log("Dentro del try de callThemisto(searchOrder) JSON.stringify(searchOrder) da: \n", JSON.stringify(searchOrder));
+    // --> {"status":"processing"}
+    // --> ergo, no lo está procesando bien.
+    const res = await fetch(process.env.LOCAL_SRV, {
+      headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(searchOrder)
+    });
 
-          if (!res.ok) {
-            throw new Error("Bad response");
-          }
+    if (!res.ok) {
+      throw new Error("Bad response from Themisto");
+    }
 
-          const character = await res.json();
-          const filteredCharacter = { name: character.name };
+    const newSearchOrder = await res.json();
 
-          ctx.status = 200;
-          ctx.body = filteredCharacter;
-        } catch (e) {
-          ctx.status = 502;
-        }
-      })
-      .routes(),
-  )
-  .listen(3000); */
+    newSearchOrder.status = "fulfilled";
+
+    return newSearchOrder;
+
+  } catch {
+
+    searchOrder.status = "failed";
+
+    return searchOrder;
+
+  }
+};
+
+module.exports = callThemisto;
