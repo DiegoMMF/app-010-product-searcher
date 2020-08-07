@@ -1,36 +1,28 @@
 const fetch = require("node-fetch");
 
 const callThemisto = async (searchOrder) => {
-  searchOrder.status = "processing";
-  try {
-    console.log("Dentro del try de callThemisto(searchOrder) JSON.stringify(searchOrder) da: \n", JSON.stringify(searchOrder));
-    // --> {"status":"processing"}
-    // --> ergo, no lo está procesando bien.
-    const res = await fetch(process.env.LOCAL_SRV, {
-      headers: {
-        // 'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(searchOrder)
-    });
+    searchOrder.status = "processing";
 
-    if (!res.ok) {
-      throw new Error("Bad response from Themisto");
-    }
+    console.log("searchOrder dentro de callThemisto es: \n", searchOrder);
 
-    const newSearchOrder = await res.json();
+    let respuesta = await fetch("https://dashboard.heroku.com/apps/diegommf-themisto/", {
+        method: 'post',
+        body:    JSON.stringify(searchOrder),
+        headers: { 'Content-Type': 'application/json' },
+    })
 
-    newSearchOrder.status = "fulfilled";
+    console.log("let respuesta = await fetch(): \n", respuesta);
 
-    return newSearchOrder;
+    let datos = await respuesta.json() // o ".JSON" ?
 
-  } catch {
+    console.log("let datos = await respuesta.json(): \n", datos);
 
-    searchOrder.status = "failed";
-
-    return searchOrder;
-
-  }
+    return datos
+    /* .then(res => {
+        res.json();
+        console.log("res.json() dentro de fetch().then: \n", res.json());
+    })
+    .then(json => console.log(".then(json => console.log(json)) devuelve esto: \n",json)); */
 };
 
 module.exports = callThemisto;
