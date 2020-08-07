@@ -9,13 +9,14 @@ const cors = require("@koa/cors");
 
 const bodyParser = require('koa-bodyparser');
 
-require("./database");
+require("./src/database");
 
 /**
  * Controladores que se encargarán de efectivizar las operaciones de los endpoints
  */
-const SearchOrder = require("./models/SearchOrder");
+const SearchOrder = require("./src/models/SearchOrder");
 const KoaLogger = require("koa-logger");
+// const callThemisto = require("./src/controllers/callThemisto");
 
 const app = new Koa();
 const router = new Router()
@@ -35,16 +36,21 @@ app.use(cors());
  *     5° ganymede -> nuevaOrden -> client
  * );
  */
-router.post('/api/product/search', ctx => {
+router.post('/api/product/search', async ctx => {
   const searchOrder = new SearchOrder;
    
   searchOrder.searchData = ctx.request.body;
   searchOrder.status = "received";
-  searchOrder.productList = {};
+  searchOrder.productList = [{}];
   
-  searchOrder.save((err) => {
+  await searchOrder.save((err) => {
       if (err) console.log(err)
   });
+
+  /* callThemisto(searchOrder)
+    .then(respuesta => console.log(respuesta)) // JSON data parsed by `data.json()` call
+    .catch(err => console.log(err)); */
+  
   ctx.body = JSON.stringify(searchOrder);
   }
 );
@@ -83,6 +89,6 @@ app
   .use(router.routes())
   .use(router.allowedMethods());
 
-app.listen(4000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Servidor Arriba.-")
 });

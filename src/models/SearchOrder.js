@@ -39,7 +39,7 @@ const SearchOrderSchema = new Schema({
         type: String, 
         required: true },
     productList: {
-        type: Product.schema, 
+        type: [Product.schema], 
         required: true }
 });
 
