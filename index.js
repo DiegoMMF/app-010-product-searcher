@@ -42,8 +42,10 @@ router.post('/api/product/search', async ctx => {
   const productsListPostScraping = postScrapingOrder.productList;
   const statusPostScraping = postScrapingOrder.status;
 
+  console.log("preScrapingOrder._id antes de findByIdAndUpdate", preScrapingOrder._id, "\n");
+
   const finalOrder = await SearchOrder.findByIdAndUpdate(
-    (await preScrapingOrder)._id,
+    preScrapingOrder._id,
     {
       $set:
       // parece que en mongoose no es necesario poner $set
