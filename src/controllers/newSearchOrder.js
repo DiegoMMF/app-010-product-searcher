@@ -13,7 +13,7 @@ exports.newSearchOrder = async (requestBodySearchData) => {
     
     searchOrder.searchData = requestBodySearchData;
     searchOrder.status = "received";
-    searchOrder.productList = [{}];
+    searchOrder.productList = [];
 
     await searchOrder.save((err) => {
         if (err) console.log(err)

@@ -22,18 +22,14 @@ const callThemisto = async (searchOrder) => {
         headers: { 'Content-Type': 'application/json' },
     })
 
-    console.log("let respuesta = await fetch(): \n", respuesta);
+    console.log("let respuesta = await fetch() dentro de callThemisto: \n", respuesta);
 
-    let datos = await respuesta.json() // o ".JSON" ?
+    let datos = await respuesta.json()
 
-    console.log("let datos = await respuesta.json(): \n", datos);
-
-    return datos
-    /* .then(res => {
-        res.json();
-        console.log("res.json() dentro de fetch().then: \n", res.json());
-    })
-    .then(json => console.log(".then(json => console.log(json)) devuelve esto: \n",json)); */
+    datos.status = "fulfilled"; // luego agregaré la opción de "failed", al manejar errores y validación
+    console.log("let datos = await respuesta.json() dentro de callThemisto: \n", datos);
+    
+    return datos;
 };
 
 module.exports = callThemisto;

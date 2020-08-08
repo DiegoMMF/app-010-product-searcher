@@ -52,25 +52,27 @@ router.post('/api/product/search', async ctx => {
 
   console.log("postScrapingOrder después de callThemisto(preScrapingOrder): ", postScrapingOrder) ;
 
-  const productsListPostScraping = postScrapingOrder.productList;
-  const statusPostScraping = postScrapingOrder.status;
-
   console.log("preScrapingOrder._id antes de findByIdAndUpdate", preScrapingOrder._id, "\n");
+
+  // creo que encontré el error: es porque ProductList no tiene _id como
+  // esquema, es decir que es un arreglo común, pero la DB sí lo pide.
 
   const finalOrder = await SearchOrder.findByIdAndUpdate(
     preScrapingOrder._id,
-    {
+    /* {
       $set:
-      // parece que en mongoose no es necesario poner $set
       {
-        productList: productsListPostScraping,
-        status: statusPostScraping
+        productList: postScrapingOrder.productList,
+        status: postScrapingOrder.status
       }
-    },
+    }, */
+    postScrapingOrder,
     {
       new: true
     }
-  ); // verificar si reemplaza o no el Doc en la DB.
+  );
+  // verificar si reemplaza o no el Doc en la DB.
+  // y si es necesario .save() 
   
   console.log("finalOrder justo antes de irnos pa'las casa'...", finalOrder);  // El tema es que me devuelve la query y no el documento...
 
