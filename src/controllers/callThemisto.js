@@ -3,6 +3,7 @@
  * entre servidores y pasaje de JSONs,
  * me parece que G enviará queries a T en lugar de body
  */
+// const dotenv = require("dotenv").config();
 const fetch = require("node-fetch");
 
 /**
@@ -15,7 +16,7 @@ const callThemisto = async (searchOrder) => {
 
     console.log("searchOrder dentro de callThemisto es: \n", searchOrder);
 
-    let respuesta = await fetch("https://dashboard.heroku.com/apps/diegommf-themisto/", {
+    let respuesta = await fetch(process.env.THEMISTO, {
         method: 'post',
         body:    JSON.stringify(searchOrder),
         headers: { 'Content-Type': 'application/json' },
