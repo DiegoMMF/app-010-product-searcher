@@ -8,7 +8,7 @@
 
 const https = require('https');
 const options = {
-  hostname: "https://dashboard.heroku.com/apps/diegommf-themisto",
+  hostname: "https://dashboard.heroku.com/apps/diegommf-ganymede",
   port: 443,
   path: '/',
   method: 'GET'

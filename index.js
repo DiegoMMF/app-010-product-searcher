@@ -19,7 +19,7 @@ const KoaLogger = require("koa-logger");
  * Controladores que se encargarán de efectivizar las operaciones de los endpoints
  */
 const { newSearchOrder } = require("./src/controllers/newSearchOrder");
-const callThemisto = require("./src/controllers/callThemisto");
+const callTheSearcher = require("./src/controllers/callTheSearcher");
 
 const app = new Koa();
 const router = new Router()
@@ -29,14 +29,14 @@ app.use(KoaLogger());
 app.use(cors());
 
 router.get("/", (ctx, next) => {
-  ctx.body = "Bienvenid@ a Ganymede Web Service!";
+  ctx.body = "Bienvenid@ a TheReceiver Web Service!";
 });
 
 /**
  * endpoint principal, donde se crea la orden solicitada y
- * se delega a Themisto la búsqueda.
+ * se delega a TheSearcher la búsqueda.
  * 
- * Anda todo menos la devolución de Themisto del JSON,
+ * Anda todo menos la devolución de TheSearcher del JSON,
  * que me genera conflicto.
  */
 router.post('/api/product/search', async ctx => {
@@ -48,9 +48,9 @@ router.post('/api/product/search', async ctx => {
   console.log("preScrapingOrder después de newSearchOrder(ctx.request.body): ", preScrapingOrder) ;
 
   const postScrapingOrder = /* new SearchOrder();
-  postScrapingOrder =  */await callThemisto(preScrapingOrder);
+  postScrapingOrder =  */await callTheSearcher(preScrapingOrder);
 
-  console.log("postScrapingOrder después de callThemisto(preScrapingOrder): ", postScrapingOrder) ;
+  console.log("postScrapingOrder después de callTheSearcher(preScrapingOrder): ", postScrapingOrder) ;
 
   console.log("preScrapingOrder._id antes de findByIdAndUpdate", preScrapingOrder._id, "\n");
 

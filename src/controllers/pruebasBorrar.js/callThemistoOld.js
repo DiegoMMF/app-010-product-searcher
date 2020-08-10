@@ -8,7 +8,7 @@
 
 const fetch = require("node-fetch");
 
-const callThemisto = async (searchOrder) => {
+const callTheSearcher = async (searchOrder) => {
   searchOrder.status = "processing";
   try {
     const res = await fetch(process.env.THEMISTO, {
@@ -19,7 +19,7 @@ const callThemisto = async (searchOrder) => {
       body: /* JSON.stringify( */searchOrder/* ) */
     });
 
-    console.log("Dentro del try de callThemisto. fetch(process.env.THEMISTO) da: \n", res);
+    console.log("Dentro del try de callTheSearcher. fetch(process.env.THEMISTO) da: \n", res);
 
     const newSearchOrder = await res.json();
 
@@ -36,4 +36,4 @@ const callThemisto = async (searchOrder) => {
   }
 };
 
-module.exports = callThemisto;
+module.exports = callTheSearcher;
